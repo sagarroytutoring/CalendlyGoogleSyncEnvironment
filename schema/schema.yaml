@@ -1,0 +1,50 @@
+schema:
+  format:
+    openapi: "3.0.0"
+  environment_input_type: "EnvironmentInputs"
+  types:
+    EnvironmentInputs:
+      type: object
+      description: "Input properties for the environment."
+      properties:
+        calendlySourceEventBookAheadDays:
+          title: "Calendly Source Event Bookahead"
+          description: "Number of days the calendly event can be booked ahead"
+          type: string
+        calendlySourceEventId:
+          title: "Calendly Source Event Id"
+          description: "Event id for calendly source event"
+          type: string
+        googleCloudProjectId:
+          title: "Google Cloud Project Id"
+          description: "Project id for the google cloud project that has the service account"
+          type: string
+        calendlySourceBearerToken:
+          title: "Calendly source account bearer token"
+          description: "Bearer token for the calendly account that stores the events"
+          type: string
+        googleTargetCalendarId:
+          title: "Google target calendar id"
+          description: "Id of the google calendar that has the events"
+          type: string
+        parameterStorePath:
+          title: "Parameter store path"
+          description: "The path for the parameters stored in ssm parameter store"
+          type: string
+        googleCalendarConfigLayerS3BucketName:
+          title: "Google calendar config layer s3 bucket name"
+          description: "Name of the s3 bucket that has the google config layer zip file"
+          type: string
+        googleCalendlarConfigLayers3Key:
+          title: "Google calendar config layer s3 key"
+          description: "Name of the zip in the s3 bucket that has the lambda layer code for google config layer"
+          type: string
+          default: "google_calendar_config_layer.zip"
+      required:
+        - calendlySourceEventBookAheadDays
+        - calendlySourceEventId
+        - googleCloudProjectId
+        - calendlySourceBearerToken
+        - googleTargetCalendarId
+        - parameterStorePath
+        - googleCalendarConfigLayerS3BucketName

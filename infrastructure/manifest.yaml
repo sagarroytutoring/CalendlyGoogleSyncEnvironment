@@ -1,0 +1,19 @@
+infrastructure:
+  templates:
+    - rendering_engine: codebuild
+      settings:
+        image: aws/codebuild/amazonlinux2-x86_64-standard:4.0
+        runtimes:
+          nodejs: 16
+          python: 3.9
+        provision:
+          - npm install -g aws-cdk
+          - pip install -r requirements.txt
+          - cdk deploy --require-approval never --outputs-file proton-outputs.json
+          - chmod +x ./cdk-to-proton.sh
+          - cat proton-outputs.json | ./cdk-to-proton.sh > outputs.json
+          - aws proton notify-resource-deployment-status-change --resource-arn $RESOURCE_ARN --status IN_PROGRESS --outputs file://./outputs.json
+        deprovision:
+          - npm install -g aws-cdk
+          - pip install -r requirements.txt
+          - cdk destroy --force
